@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+"
+    version="1.0-SNAPSHOT">
+
+    <information>
+        <title>OpenJFX JNLP application launcher</title>
+        <vendor>ZF Friedrichshafen AG</vendor>
+        <description>OpenJFX JNLP WebStart Application</description>
+    </information>
+
+    <security>
+        <all-permissions />
+    </security>
+
+    <resources>
+        <java version="21" vendor="Temurin" />
+        <jar href="OpenJFX-JNLP.jar" main="true" />
+        <!-- resources -->
+        <jar href="lib/commons-lang3-3.18.0.jar" />
+        <jar href="lib/javafx-base-21.0.8-win.jar" />
+        <jar href="lib/javafx-base-21.0.8.jar" />
+        <jar href="lib/javafx-controls-21.0.8-win.jar" />
+        <jar href="lib/javafx-controls-21.0.8.jar" />
+        <jar href="lib/javafx-fxml-21.0.8-win.jar" />
+        <jar href="lib/javafx-fxml-21.0.8.jar" />
+        <jar href="lib/javafx-graphics-21.0.8-win.jar" />
+        <jar href="lib/javafx-graphics-21.0.8.jar" />
+    </resources>
+
+    <application-desc main-class="org.test.AppLauncher"/>
+</jnlp>
