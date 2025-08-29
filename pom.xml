@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.test</groupId>
+    <artifactId>jnlp-openjfx</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>OpenJFX-JNLP</name>
+    <description>Minimal OpenJFX example running with JNLP</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <automaticModuleName>${project.groupId}.jnlp.openjfx</automaticModuleName>
+        <mainClass>org.test.AppLauncher</mainClass>
+
+        <!-- Versions used in project -->
+        <java-version>21</java-version>
+
+        <!-- Dependency versions used in project -->
+        <openjfx-version>21.0.8</openjfx-version>
+        <commons-lang-version>3.18.0</commons-lang-version>
+
+        <!-- Plugin versions used in project -->
+        <maven-compiler-plugin-version>3.13.0</maven-compiler-plugin-version>
+        <maven-jar-plugin-version>3.4.2</maven-jar-plugin-version>
+        <maven-dependency-plugin-version>3.8.1</maven-dependency-plugin-version>
+        
+        <maven.compiler.target>${java-version}</maven.compiler.target>
+        <maven.compiler.source>${java-version}</maven.compiler.source>
+    </properties>
+
+    <dependencies>
+        <!-- OpenJFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${openjfx-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang-version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}</finalName>
+
+        <plugins>
+            <!-- Compile classes -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <fork>true</fork>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Package into executable JAR file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/buildout</outputDirectory>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                    <mainClass>${mainClass}</mainClass>
+                                </manifest>
+                                <manifestEntries>
+                                    <Automatic-Module-Name>${automaticModuleName}</Automatic-Module-Name>
+                                    <Version>${project.version}</Version>
+                                    <SCM-Revision>${buildNumber}</SCM-Revision>
+                                    <Application-Name>${project.name}</Application-Name>
+                                    <Permissions>all-permissions</Permissions>
+                                    <Codebase>*</Codebase>
+                                    <Application-Library-Allowable-Codebase>*</Application-Library-Allowable-Codebase>
+                                    <Caller-Allowable-Codebase>*</Caller-Allowable-Codebase>
+                                    <JavaFX-Feature-Proxy>None</JavaFX-Feature-Proxy>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Copy dependencies to folder in build -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/buildout/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

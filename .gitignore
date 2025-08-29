@@ -1,0 +1,10 @@
+# Default ignore
+/bin/
+/logs/
+/target/
+/.settings/
+/.metadata/
+/.classpath
+/.project
+/pom.xml.*
+/release.properties
